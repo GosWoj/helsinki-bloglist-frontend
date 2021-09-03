@@ -19,7 +19,7 @@ const App = () => {
       setBlogs(blogs);
     };
     fetchBlogs();
-  }, []);
+  }, [blogs]);
 
   useEffect(() => {
     const loggedUser = window.localStorage.getItem("bloglistUser");
@@ -133,9 +133,11 @@ const App = () => {
             </div>
             <button type="submit">Add</button>
           </form>
-          {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
-          ))}
+          <div>
+            {blogs.map((blog) => (
+              <Blog key={blog.id} blog={blog} />
+            ))}
+          </div>
         </div>
       )}
     </div>
