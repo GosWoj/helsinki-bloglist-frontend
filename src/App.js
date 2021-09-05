@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Blog from "./components/Blog";
+import BlogForm from "./components/BlogForm";
 import Notification from "./components/Notification";
 import Toggle from "./components/Toggle";
 import blogService from "./services/blogs";
@@ -11,9 +12,6 @@ const App = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [name, setName] = useState("");
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setUrl] = useState("");
   const [notification, setNotification] = useState(null);
   const [error, setError] = useState(false);
 
@@ -68,21 +66,15 @@ const App = () => {
     setName("");
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleAddBlog = (blogObject) => {
     try {
-      blogService.addBlog({ title, author, url });
-      setNotification(`Blog "${title}" by ${author} added!`);
-      setTitle("");
-      setAuthor("");
-      setUrl("");
-
+      blogService.addBlog(blogObject);
+    } catch (error) {
+      console.log(error);
+      setNotification("Something went wrong!");
       setTimeout(() => {
         setNotification(null);
       }, 5000);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -123,37 +115,10 @@ const App = () => {
           </div>
           <button onClick={handleLogout}>Logout</button>
           <Toggle buttonLabel="Add a new blog">
-            <h2>Add a new blog</h2>
-            <form onSubmit={handleSubmit}>
-              <div>
-                Title:
-                <input
-                  type="text"
-                  name="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </div>
-              <div>
-                Author:
-                <input
-                  type="text"
-                  name="author"
-                  value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
-                />
-              </div>
-              <div>
-                Url:
-                <input
-                  type="text"
-                  name="url"
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                />
-              </div>
-              <button type="submit">Add</button>
-            </form>
+            <BlogForm
+              addBlog={handleAddBlog}
+              setNotification={setNotification}
+            />
           </Toggle>
           <div>
             {blogs.map((blog) => (
