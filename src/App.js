@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Blog from "./components/Blog";
 import Notification from "./components/Notification";
+import Toggle from "./components/Toggle";
 import blogService from "./services/blogs";
 import * as loginService from "./services/login";
 
@@ -115,41 +116,45 @@ const App = () => {
         </div>
       ) : (
         <div>
-          <h2>blogs</h2>
+          <h2>Blogs</h2>
           <Notification notification={notification} />
-          <h3>{name} logged in</h3>
+          <div>
+            <h3>{name} logged in</h3>
+          </div>
           <button onClick={handleLogout}>Logout</button>
-          <h2>Add a new blog</h2>
-          <form onSubmit={handleSubmit}>
-            <div>
-              Title:
-              <input
-                type="text"
-                name="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div>
-              Author:
-              <input
-                type="text"
-                name="author"
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-              />
-            </div>
-            <div>
-              Url:
-              <input
-                type="text"
-                name="url"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-              />
-            </div>
-            <button type="submit">Add</button>
-          </form>
+          <Toggle buttonLabel="Add a new blog">
+            <h2>Add a new blog</h2>
+            <form onSubmit={handleSubmit}>
+              <div>
+                Title:
+                <input
+                  type="text"
+                  name="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              <div>
+                Author:
+                <input
+                  type="text"
+                  name="author"
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
+                />
+              </div>
+              <div>
+                Url:
+                <input
+                  type="text"
+                  name="url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                />
+              </div>
+              <button type="submit">Add</button>
+            </form>
+          </Toggle>
           <div>
             {blogs.map((blog) => (
               <Blog key={blog.id} blog={blog} />
