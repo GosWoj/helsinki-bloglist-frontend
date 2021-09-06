@@ -46,10 +46,29 @@ const addLike = async (blog, id) => {
   }
 };
 
+const deleteBlog = async (id) => {
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+  };
+
+  const blogUrl = `${baseUrl}/${id}`;
+
+  try {
+    const response = await axios.delete(blogUrl, config);
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const blogService = {
   getAll,
   addBlog,
   addLike,
+  deleteBlog,
   setToken,
 };
 

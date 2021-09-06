@@ -16,6 +16,11 @@ button {
   padding: 0.5rem;
 }
 
+.button-delete {
+  background: red;
+  color: white;
+}
+
 .notification {
   border: 0.5rem green solid;
   border-radius: 0.5rem;
