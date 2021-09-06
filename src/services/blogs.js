@@ -28,9 +28,28 @@ const addBlog = async (blog) => {
   }
 };
 
+const addLike = async (blog, id) => {
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+  };
+
+  const blogUrl = `${baseUrl}/${id}`;
+
+  try {
+    const request = await axios.put(blogUrl, blog, config);
+
+    return request.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const blogService = {
   getAll,
   addBlog,
+  addLike,
   setToken,
 };
 
