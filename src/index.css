@@ -3,6 +3,19 @@
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+p {
+  margin: 0.4rem 0.1rem;
+}
+
+button {
+  margin: 0.2rem 0.4rem;
+}
+
+.blog {
+  border: 0.1rem solid black;
+  padding: 0.5rem;
+}
+
 .notification {
   border: 0.5rem green solid;
   border-radius: 0.5rem;
