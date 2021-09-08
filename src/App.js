@@ -12,7 +12,7 @@ const App = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [name, setName] = useState("");
-  const [notification, setNotification] = useState(null);
+  const [notification, setNotification] = useState("");
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -78,6 +78,14 @@ const App = () => {
     }
   };
 
+  const handleLike = (blogObject, id) => {
+    try {
+      blogService.addLike(blogObject, id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       {!user ? (
@@ -124,7 +132,12 @@ const App = () => {
             {blogs
               .sort((a, b) => b.likes - a.likes)
               .map((blog) => (
-                <Blog key={blog.id} blog={blog} user={user} />
+                <Blog
+                  key={blog.id}
+                  blog={blog}
+                  user={user}
+                  handleLike={handleLike}
+                />
               ))}
           </div>
         </div>

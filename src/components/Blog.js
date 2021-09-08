@@ -1,28 +1,25 @@
 import React, { useState } from "react";
 import blogService from "../services/blogs";
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog, user, handleLike }) => {
   const [visibility, setVisibility] = useState(false);
 
   const toggleVisibility = () => {
     setVisibility(!visibility);
   };
 
-  const handleLike = (e) => {
+  const handleClick = (e) => {
     e.preventDefault();
 
-    const blogObject = {
-      author: blog.author,
-      title: blog.title,
-      url: blog.url,
-      likes: blog.likes + 1,
-    };
-
-    try {
-      blogService.addLike(blogObject, blog.id);
-    } catch (error) {
-      console.log(error);
-    }
+    handleLike(
+      {
+        author: blog.author,
+        title: blog.title,
+        url: blog.url,
+        likes: blog.likes + 1,
+      },
+      blog.id
+    );
   };
 
   const handleDelete = (e) => {
@@ -46,7 +43,7 @@ const Blog = ({ blog, user }) => {
           <p>{blog.url}</p>
           <p>
             {blog.likes}
-            <button onClick={handleLike}>Like</button>
+            <button onClick={handleClick}>Like</button>
           </p>
           <p>{blog.author}</p>
           {blog.user.username === user.username ? (
