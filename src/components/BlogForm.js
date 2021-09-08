@@ -34,6 +34,7 @@ const BlogForm = ({ addBlog, setNotification }) => {
           <input
             type="text"
             name="title"
+            id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -43,6 +44,7 @@ const BlogForm = ({ addBlog, setNotification }) => {
           <input
             type="text"
             name="author"
+            id="author"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
           />
@@ -52,6 +54,7 @@ const BlogForm = ({ addBlog, setNotification }) => {
           <input
             type="text"
             name="url"
+            id="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
           />
