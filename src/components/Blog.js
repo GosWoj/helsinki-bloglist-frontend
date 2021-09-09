@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import blogService from "../services/blogs";
 
-const Blog = ({ blog, user, handleLike }) => {
+const Blog = ({ blog, user, handleLike, handleDelete }) => {
   const [visibility, setVisibility] = useState(false);
 
   const toggleVisibility = () => {
@@ -22,15 +21,11 @@ const Blog = ({ blog, user, handleLike }) => {
     );
   };
 
-  const handleDelete = (e) => {
+  const handleRemove = (e) => {
     e.preventDefault();
 
     if (window.confirm(`Delete blog ${blog.title} by ${blog.author}?`)) {
-      try {
-        blogService.deleteBlog(blog.id);
-      } catch (error) {
-        console.log(error);
-      }
+      handleDelete(blog.id);
     }
   };
 
@@ -47,7 +42,7 @@ const Blog = ({ blog, user, handleLike }) => {
           </p>
           <p>{blog.author}</p>
           {blog.user.username === user.username ? (
-            <button onClick={handleDelete} className="button-delete">
+            <button onClick={handleRemove} className="button-delete">
               Remove
             </button>
           ) : null}

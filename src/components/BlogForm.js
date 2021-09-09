@@ -15,12 +15,12 @@ const BlogForm = ({ addBlog, setNotification }) => {
       setAuthor("");
       setUrl("");
       setTimeout(() => {
-        setNotification(null);
+        setNotification("");
       }, 5000);
     } else {
       setNotification("All fields are required!");
       setTimeout(() => {
-        setNotification(null);
+        setNotification("");
       }, 5000);
     }
   };

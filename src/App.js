@@ -15,11 +15,12 @@ const App = () => {
   const [notification, setNotification] = useState("");
   const [error, setError] = useState(false);
 
+  const fetchBlogs = async () => {
+    const blogs = await blogService.getAll();
+    setBlogs(blogs);
+  };
+
   useEffect(() => {
-    const fetchBlogs = async () => {
-      const blogs = await blogService.getAll();
-      setBlogs(blogs);
-    };
     fetchBlogs();
   }, []);
 
@@ -66,9 +67,10 @@ const App = () => {
     setName("");
   };
 
-  const handleAddBlog = (blogObject) => {
+  const handleAddBlog = async (blogObject) => {
     try {
-      blogService.addBlog(blogObject);
+      await blogService.addBlog(blogObject);
+      fetchBlogs();
     } catch (error) {
       console.log(error);
       setNotification("Something went wrong!");
@@ -78,9 +80,19 @@ const App = () => {
     }
   };
 
-  const handleLike = (blogObject, id) => {
+  const handleLike = async (blogObject, id) => {
     try {
-      blogService.addLike(blogObject, id);
+      await blogService.addLike(blogObject, id);
+      fetchBlogs();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await blogService.deleteBlog(id);
+      fetchBlogs();
     } catch (error) {
       console.log(error);
     }
@@ -137,6 +149,7 @@ const App = () => {
                   blog={blog}
                   user={user}
                   handleLike={handleLike}
+                  handleDelete={handleDelete}
                 />
               ))}
           </div>
