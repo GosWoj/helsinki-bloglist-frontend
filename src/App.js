@@ -21,7 +21,7 @@ const App = () => {
       setBlogs(blogs);
     };
     fetchBlogs();
-  }, [blogs]);
+  }, []);
 
   useEffect(() => {
     const loggedUser = window.localStorage.getItem("bloglistUser");
@@ -92,7 +92,7 @@ const App = () => {
         <div>
           <h2>Login</h2>
           <Notification notification={notification} error={error} />
-          <form onSubmit={handleLogin}>
+          <form id="login-form" onSubmit={handleLogin}>
             <div>
               Username:
               <input
