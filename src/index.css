@@ -28,7 +28,8 @@ button {
 }
 
 .notification-error {
-  border: 0.5rem red solid;
+  border: 0.5rem solid;
+  border-color: rgb(255, 0, 0);
   border-radius: 0.5rem;
   font-size: 2rem;
 }
