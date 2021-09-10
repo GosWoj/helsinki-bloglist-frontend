@@ -59,7 +59,9 @@ const BlogForm = ({ addBlog, setNotification }) => {
             onChange={(e) => setUrl(e.target.value)}
           />
         </div>
-        <button type="submit">Add</button>
+        <button type="submit" id="add-blog-button">
+          Add
+        </button>
       </form>
     </div>
   );

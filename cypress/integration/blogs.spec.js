@@ -38,4 +38,26 @@ describe("Blog app", function () {
       );
     });
   });
+
+  describe.only("When logged in", function () {
+    beforeEach(function () {
+      cy.request("POST", "http://localhost:3003/api/login", {
+        username: "test",
+        password: "test123",
+      }).then((response) => {
+        localStorage.setItem("bloglistUser", JSON.stringify(response.body));
+        cy.visit("http://localhost:3000");
+      });
+    });
+
+    it("A blog can be created", function () {
+      cy.contains("Add a new blog").click();
+      cy.get("#title").type("Cypress is great for e2e testing");
+      cy.get("#author").type("Test Testing");
+      cy.get("#url").type("www.google.com");
+      cy.get("#add-blog-button").click();
+
+      cy.get(".blog").contains("Cypress is great for e2e testing");
+    });
+  });
 });
