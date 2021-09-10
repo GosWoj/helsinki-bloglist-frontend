@@ -32,13 +32,17 @@ const Blog = ({ blog, user, handleLike, handleDelete }) => {
   return (
     <div className="blog">
       {blog.title}
-      <button onClick={toggleVisibility}>{visibility ? "Hide" : "View"}</button>
+      <button onClick={toggleVisibility} id="view-button">
+        {visibility ? "Hide" : "View"}
+      </button>
       {visibility ? (
         <div>
           <p>{blog.url}</p>
           <p>
-            {blog.likes}
-            <button onClick={handleClick}>Like</button>
+            <span id="likes">{blog.likes}</span>
+            <button onClick={handleClick} id="like-button">
+              Like
+            </button>
           </p>
           <p>{blog.author}</p>
           {blog.user.username === user.username ? (

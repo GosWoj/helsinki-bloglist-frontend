@@ -39,15 +39,9 @@ describe("Blog app", function () {
     });
   });
 
-  describe.only("When logged in", function () {
+  describe("When logged in", function () {
     beforeEach(function () {
-      cy.request("POST", "http://localhost:3003/api/login", {
-        username: "test",
-        password: "test123",
-      }).then((response) => {
-        localStorage.setItem("bloglistUser", JSON.stringify(response.body));
-        cy.visit("http://localhost:3000");
-      });
+      cy.login({ username: "test", password: "test123" });
     });
 
     it("A blog can be created", function () {
@@ -58,6 +52,24 @@ describe("Blog app", function () {
       cy.get("#add-blog-button").click();
 
       cy.get(".blog").contains("Cypress is great for e2e testing");
+    });
+  });
+
+  describe("When logged in and blog already exists", function () {
+    beforeEach(function () {
+      cy.login({ username: "test", password: "test123" });
+      cy.addBlog({
+        title: "Cypress Commands are very useful",
+        author: "Test Testing",
+        url: "www.google.com",
+      });
+    });
+
+    it("User can like a blog", function () {
+      cy.get(".blog").contains("Cypress Commands are very useful");
+      cy.get("#view-button").click();
+      cy.get("#like-button").click();
+      cy.get("#likes").contains(1);
     });
   });
 });
