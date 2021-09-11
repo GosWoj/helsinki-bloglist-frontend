@@ -137,7 +137,9 @@ const App = () => {
           <div>
             <h3>{name} logged in</h3>
           </div>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleLogout} id="logout-button">
+            Logout
+          </button>
           <Toggle buttonLabel="Add a new blog">
             <BlogForm
               addBlog={handleAddBlog}

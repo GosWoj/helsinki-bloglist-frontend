@@ -1,13 +1,16 @@
 describe("Blog app", function () {
   beforeEach(function () {
     cy.request("POST", "http://localhost:3003/api/testing/reset");
-    const user = {
+    cy.createUser({
       name: "Test Testing",
       username: "test",
       password: "test123",
-    };
-    cy.request("POST", "http://localhost:3003/api/users", user);
-    cy.visit("http://localhost:3000");
+    });
+    cy.createUser({
+      name: "Ricky LaFleur",
+      username: "ricky",
+      password: "smokes",
+    });
   });
 
   it("Login form is shown", function () {
@@ -70,6 +73,32 @@ describe("Blog app", function () {
       cy.get("#view-button").click();
       cy.get("#like-button").click();
       cy.get("#likes").contains(1);
+    });
+
+    it("User can delete a blog", function () {
+      cy.get(".blog").contains("Cypress Commands are very useful");
+      cy.get("#view-button").click();
+      cy.get(".button-delete").click();
+      cy.should("not.contain", ".blog");
+    });
+  });
+
+  describe.only("When different user created a blog", function () {
+    beforeEach(function () {
+      cy.login({ username: "test", password: "test123" });
+      cy.addBlog({
+        title: "Cypress Commands are very useful",
+        author: "Test Testing",
+        url: "www.google.com",
+      });
+      cy.get("#logout-button").click();
+      cy.login({ username: "ricky", password: "smokes" });
+    });
+
+    it("Blog can't be deleted", function () {
+      cy.get(".blog").contains("Cypress Commands are very useful");
+      cy.get("#view-button").click();
+      cy.get(".blog").should("not.contain", ".button-delete");
     });
   });
 });
