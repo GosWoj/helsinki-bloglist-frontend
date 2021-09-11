@@ -83,7 +83,7 @@ describe("Blog app", function () {
     });
   });
 
-  describe.only("When different user created a blog", function () {
+  describe("When different user created a blog", function () {
     beforeEach(function () {
       cy.login({ username: "test", password: "test123" });
       cy.addBlog({
@@ -99,6 +99,43 @@ describe("Blog app", function () {
       cy.get(".blog").contains("Cypress Commands are very useful");
       cy.get("#view-button").click();
       cy.get(".blog").should("not.contain", ".button-delete");
+    });
+  });
+
+  describe.only("Multiple blogs exist", function () {
+    beforeEach(function () {
+      cy.login({ username: "test", password: "test123" });
+      cy.addBlog({
+        title: "Cypress Commands are very useful",
+        author: "Test Testing",
+        url: "www.google.com",
+      });
+      cy.addBlog({
+        title: "Only allows to run specific tests",
+        author: "Test Testing",
+        url: "www.google.com",
+      });
+      cy.get("#logout-button").click();
+      cy.login({ username: "ricky", password: "smokes" });
+      cy.addBlog({
+        title: "Trevor and Cory are stupid",
+        author: "Ricky LaFleur",
+        url: "www.sunnyvale.com",
+      });
+    });
+
+    it("Blog with most likes is at the top", function () {
+      cy.get(".blog").then((blogs) => {
+        cy.wrap(blogs[0]).contains("Cypress Commands are very useful");
+      });
+
+      cy.contains("Trevor and Cory are stupid").find("button").click();
+      cy.get("#like-button").click();
+      cy.get("#likes").contains(1);
+
+      cy.get(".blog").then((blogs) => {
+        cy.wrap(blogs[0]).contains("Trevor and Cory are stupid");
+      });
     });
   });
 });

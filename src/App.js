@@ -146,7 +146,7 @@ const App = () => {
               setNotification={setNotification}
             />
           </Toggle>
-          <div>
+          <div className="blogs">
             {blogs
               .sort((a, b) => b.likes - a.likes)
               .map((blog) => (
