@@ -80,9 +80,9 @@ const App = () => {
     }
   };
 
-  const handleLike = async (blogObject, id) => {
+  const handleLike = async (id) => {
     try {
-      await blogService.addLike(blogObject, id);
+      await blogService.addLike(id);
       fetchBlogs();
     } catch (error) {
       console.log(error);

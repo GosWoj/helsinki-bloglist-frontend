@@ -28,17 +28,11 @@ const addBlog = async (blog) => {
   }
 };
 
-const addLike = async (blog, id) => {
-  const config = {
-    headers: {
-      Authorization: token,
-    },
-  };
-
-  const blogUrl = `${baseUrl}/${id}`;
+const addLike = async (id) => {
+  const blogUrl = `${baseUrl}/like/${id}`;
 
   try {
-    const request = await axios.put(blogUrl, blog, config);
+    const request = await axios.put(blogUrl);
 
     return request.data;
   } catch (error) {

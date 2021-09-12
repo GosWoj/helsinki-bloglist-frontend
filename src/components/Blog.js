@@ -10,15 +10,7 @@ const Blog = ({ blog, user, handleLike, handleDelete }) => {
   const handleClick = (e) => {
     e.preventDefault();
 
-    handleLike(
-      {
-        author: blog.author,
-        title: blog.title,
-        url: blog.url,
-        likes: blog.likes + 1,
-      },
-      blog.id
-    );
+    handleLike(blog.id);
   };
 
   const handleRemove = (e) => {
